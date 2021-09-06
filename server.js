@@ -1,12 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-const fs = require('fs');
 const mongoose = require("mongoose");
 
 const workoutsDatabase = require('./database/workoutsDatabase.json');
-const exercisesDatabase = require('./database/exercisesDatabase.json');
 const Exercise = require('./models/Exercise');
+const Workout = require('./models/Workout');
 
 dotenv.config();
 const app = express();
@@ -15,7 +14,7 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb+srv://philipdaveby:dj730Jk2Gy2ohd7akK@cluster0.b0ln6.mongodb.net/Hack-day?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }, () => {
+mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true }, () => {
   console.log("Connected to db!");
   app.listen(port, () => console.log(`Listening on port ${port}`));
   });
@@ -42,13 +41,30 @@ app.post('/api/exercise', async (req, res) => {
   } catch (err) {
     console.log(err)
   }
-
-
 });
 
 app.get('/api/workouts', (req, res) => {
-    console.log(workoutsDatabase)
-    res.send(workoutsDatabase);
+  Workout.find({}, (err, workouts) => {
+    res.send(workouts);
+  });
+});
+
+app.post('/api/workout', async (req, res) => {
+
+  const workout = new Workout({
+    title: req.body.title,
+    workout: req.body.workout
+  });
+
+  res.send(
+    `I received your POST request. This is what you sent me: ${JSON.stringify(req.body)}`,
+  );
+
+  try {
+    await workout.save();
+  } catch (err) {
+    console.log(err)
+  }
 });
 
 /*

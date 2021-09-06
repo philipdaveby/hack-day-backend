@@ -1,24 +1,24 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
-const exerciseSchema = new Schema({
+const WorkoutSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
     },
-    category: {
-        type: String,
+    workout: {
+        type: Array,
         required: true
     },
     id: {
         type: Number,
-        default: (Math.floor(Math.random() * 1000)).toString()
+        default: (Math.floor(Math.random() * 100000)).toString()
         
     },
-    clicked: {
+    done: {
         type: Boolean,
         default: false
     },
-});
+    
+})
 
-module.exports = { exerciseSchema }
+module.exports = mongoose.model('Workout', WorkoutSchema);

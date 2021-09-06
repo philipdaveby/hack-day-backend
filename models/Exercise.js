@@ -11,7 +11,7 @@ const ExerciseSchema = new mongoose.Schema({
     },
     id: {
         type: Number,
-        default: (Math.floor(Math.random() * 1000)).toString()
+        default: (Math.floor(Math.random() * 100000)).toString()
         
     },
     clicked: {
@@ -22,5 +22,3 @@ const ExerciseSchema = new mongoose.Schema({
 })
 
 module.exports = mongoose.model('Exercise', ExerciseSchema);
-
-// {"title":"Push ups","category":"chest, arms","id":0,"clicked":false}
