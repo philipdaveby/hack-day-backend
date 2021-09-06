@@ -71,12 +71,20 @@ app.post('/api/workout', async (req, res) => {
 
 app.route('/api/workout/remove/:id').get((req, res) => {
   const id = req.params.id;
-  Workout.findByIdAndDelete(id, err => {
+  Workout.findOneAndDelete({
+    "workoutId": id
+  }, err => {
     if (err) {
       return res.status(500).send(err);
     }
     res.sendStatus(204);
   });
+  // Workout.findByIdAndDelete(id, err => {
+  //   if (err) {
+  //     return res.status(500).send(err);
+  //   }
+  //   res.sendStatus(204);
+  // });
 });
 
 // app.delete('api/workout', async (req, res) => {
