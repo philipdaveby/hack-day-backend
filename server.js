@@ -29,7 +29,8 @@ app.post('/api/exercise', async (req, res) => {
 
   const exercise = new Exercise({
     title: req.body.title,
-    category: req.body.category
+    category: req.body.category,
+    id: (Math.floor(Math.random() * 100000))
   });
   
   res.send(
@@ -53,7 +54,8 @@ app.post('/api/workout', async (req, res) => {
 
   const workout = new Workout({
     title: req.body.title,
-    workout: req.body.workout
+    workout: req.body.workout,
+    workoutId: (Math.floor(Math.random() * 100000))
   });
 
   res.send(
@@ -67,13 +69,16 @@ app.post('/api/workout', async (req, res) => {
   }
 });
 
-/*
+app.route('/api/workout/remove/:id').get((req, res) => {
+  const id = req.params.id;
+  Workout.findByIdAndDelete(id, err => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.sendStatus(204);
+  });
+});
 
-- Get workouts
-- Post workout
-- Put workout
-- Delete workouts
+// app.delete('api/workout', async (req, res) => {
 
-*/
-
-// mongoose.set("useFindAndModify", false);
+// });

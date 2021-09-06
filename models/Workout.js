@@ -9,9 +9,9 @@ const WorkoutSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
-    id: {
+    workoutId: {
         type: Number,
-        default: (Math.floor(Math.random() * 100000)).toString()
+        required: true
         
     },
     done: {

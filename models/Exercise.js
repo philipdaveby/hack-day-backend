@@ -11,7 +11,7 @@ const ExerciseSchema = new mongoose.Schema({
     },
     id: {
         type: Number,
-        default: (Math.floor(Math.random() * 100000)).toString()
+        required: true
         
     },
     clicked: {
