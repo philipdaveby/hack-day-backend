@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const mongoose = require("mongoose");
 
-const workoutsDatabase = require('./database/workoutsDatabase.json');
 const Exercise = require('./models/Exercise');
 const Workout = require('./models/Workout');
 
@@ -79,14 +78,5 @@ app.route('/api/workout/remove/:id').get((req, res) => {
     }
     res.sendStatus(204);
   });
-  // Workout.findByIdAndDelete(id, err => {
-  //   if (err) {
-  //     return res.status(500).send(err);
-  //   }
-  //   res.sendStatus(204);
-  // });
 });
 
-// app.delete('api/workout', async (req, res) => {
-
-// });
