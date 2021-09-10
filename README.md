@@ -2,7 +2,6 @@
 
 This is the backend for the "Workout app"
 
-About Workout app
 An application to help you plan and store you exercises in personalized workouts.
 
 ![Workout app](https://user-images.githubusercontent.com/73835849/132840141-c744ffa3-c78b-4422-8f2c-eb4016ae5beb.png)
