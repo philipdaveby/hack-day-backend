@@ -6,6 +6,7 @@ const cors = require('cors');
 
 const Exercise = require('./models/Exercise');
 const Workout = require('./models/Workout');
+const { canViewProject, scopedWorkouts } = require('./permissions/project');
 
 dotenv.config();
 const app = express();
@@ -31,7 +32,8 @@ app.post('/api/exercise', async (req, res) => {
   const exercise = new Exercise({
     title: req.body.title,
     category: req.body.category,
-    id: (Math.floor(Math.random() * 100000))
+    id: (Math.floor(Math.random() * 100000)),
+    user: req.body.email
   });
   
   res.send(
@@ -45,9 +47,15 @@ app.post('/api/exercise', async (req, res) => {
   }
 });
 
-app.get('/api/workouts', (req, res) => {
+// app.get('/api/workouts', (req, res) => {
+//   Workout.find({}, (err, workouts) => {
+//     res.send(workouts);
+//   });
+// });
+
+app.post('/api/workouts', (req, res) => {
   Workout.find({}, (err, workouts) => {
-    res.send(workouts);
+    res.send(scopedWorkouts(req.body.user, workouts));
   });
 });
 
@@ -56,7 +64,8 @@ app.post('/api/workout', async (req, res) => {
   const workout = new Workout({
     title: req.body.title,
     workout: req.body.workout,
-    workoutId: (Math.floor(Math.random() * 100000))
+    workoutId: (Math.floor(Math.random() * 100000)),
+    user: req.body.user
   });
 
   res.send(

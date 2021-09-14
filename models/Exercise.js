@@ -18,7 +18,10 @@ const ExerciseSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    
+    user: {
+        type: String,
+        required: true
+    }
 })
 
 module.exports = mongoose.model('Exercise', ExerciseSchema);

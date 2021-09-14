@@ -18,6 +18,10 @@ const WorkoutSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    user: {
+        type: String,
+        required: true
+    }
     
 })
 
