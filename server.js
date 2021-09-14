@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const Exercise = require('./models/Exercise');
 const Workout = require('./models/Workout');
-const { canViewProject, scopedWorkouts } = require('./permissions/project');
+const { scopedWorkouts, scopedExercises } = require('./permissions/project');
 
 dotenv.config();
 const app = express();
@@ -21,9 +21,9 @@ mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopo
   app.listen(port, () => console.log(`Listening on port ${port}`));
   });
 
-app.get('/api/exercises', (req, res) => {
+app.post('/api/exercises', (req, res) => {
   Exercise.find({}, (err, exercises) => {
-    res.send(exercises);
+    res.send(scopedExercises(req.body.user, exercises));
   });
 });
 
@@ -33,7 +33,7 @@ app.post('/api/exercise', async (req, res) => {
     title: req.body.title,
     category: req.body.category,
     id: (Math.floor(Math.random() * 100000)),
-    user: req.body.email
+    user: req.body.user
   });
   
   res.send(
@@ -46,12 +46,6 @@ app.post('/api/exercise', async (req, res) => {
     console.log(err)
   }
 });
-
-// app.get('/api/workouts', (req, res) => {
-//   Workout.find({}, (err, workouts) => {
-//     res.send(workouts);
-//   });
-// });
 
 app.post('/api/workouts', (req, res) => {
   Workout.find({}, (err, workouts) => {
